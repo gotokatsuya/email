@@ -14,7 +14,7 @@ go get github.com/gotokatsuya/email
 
 ```go
 e := NewEmail()
-e.FromName = "Katsuya Goto"
+e.FromName = "Katsuya Goto" // Kanji is OK too.
 e.FromAddress = "test@gmail.com"
 e.ToAddresses = []string{"test@example.com"}
 e.BccAddresses = []string{"test_bcc@example.com"}
