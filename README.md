@@ -1,12 +1,11 @@
-email written in go
+email
 =====  
-
-Email library for Go.  
-This is inspired by github.com/jordan-wright/email.  
+Written in go.  
+This is inspired by [jordan-wright](github.com/jordan-wright/email).  
 
 ## Install
-```ruby
-# Requires go version >= 1.1  
+```c
+// Requires go version >= 1.1  
 go get github.com/gotokatsuya/email
 ```
 
