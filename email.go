@@ -26,17 +26,17 @@ const (
 
 // Email is the type used for email messages
 type Email struct {
-	FromName    string
-	FromAddress string
-	To          []string
-	Bcc         []string
-	Cc          []string
-	Subject     string
-	Text        []byte // Plaintext message (optional)
-	HTML        []byte // Html message (optional)
-	Headers     textproto.MIMEHeader
-	Attachments []*Attachment
-	ReadReceipt []string
+	FromName     string
+	FromAddress  string
+	ToAddresses  []string
+	BccAddresses []string
+	CcAddresses  []string
+	Subject      string
+	Text         []byte // Plaintext message (optional)
+	HTML         []byte // Html message (optional)
+	Headers      textproto.MIMEHeader
+	Attachments  []*Attachment
+	ReadReceipt  []string
 }
 
 // NewEmail creates an Email, and returns the pointer to it.
@@ -107,11 +107,11 @@ func (e *Email) msgHeaders() textproto.MIMEHeader {
 		}
 	}
 	// Set headers if there are values.
-	if _, ok := res["To"]; !ok && len(e.To) > 0 {
-		res.Set("To", strings.Join(e.To, ", "))
+	if _, ok := res["To"]; !ok && len(e.ToAddresses) > 0 {
+		res.Set("To", strings.Join(e.ToAddresses, ", "))
 	}
-	if _, ok := res["Cc"]; !ok && len(e.Cc) > 0 {
-		res.Set("Cc", strings.Join(e.Cc, ", "))
+	if _, ok := res["Cc"]; !ok && len(e.CcAddresses) > 0 {
+		res.Set("Cc", strings.Join(e.CcAddresses, ", "))
 	}
 	if _, ok := res["Subject"]; !ok && e.Subject != "" {
 		res.Set("Subject", e.Subject)
@@ -202,8 +202,8 @@ func (e *Email) Bytes() ([]byte, error) {
 // This function merges the To, Cc, and Bcc fields and calls the smtp.SendMail function using the Email.Bytes() output as the message
 func (e *Email) Send(addr string, a smtp.Auth) error {
 	// Merge the To, Cc, and Bcc fields
-	to := make([]string, 0, len(e.To)+len(e.Cc)+len(e.Bcc))
-	to = append(append(append(to, e.To...), e.Cc...), e.Bcc...)
+	to := make([]string, 0, len(e.ToAddresses)+len(e.CcAddresses)+len(e.BccAddresses))
+	to = append(append(append(to, e.ToAddresses...), e.CcAddresses...), e.BccAddresses...)
 	for i := 0; i < len(to); i++ {
 		addr, err := mail.ParseAddress(to[i])
 		if err != nil {

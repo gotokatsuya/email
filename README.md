@@ -13,9 +13,9 @@ This is inspired by github.com/jordan-wright/email.
 e := NewEmail()
 e.FromName = "Katsuya Goto"
 e.FromAddress = "test@gmail.com"
-e.To = []string{"test@example.com"}
-e.Bcc = []string{"test_bcc@example.com"}
-e.Cc = []string{"test_cc@example.com"}
+e.ToAddresses = []string{"test@example.com"}
+e.BccAddresses = []string{"test_bcc@example.com"}
+e.CcAddresses = []string{"test_cc@example.com"}
 e.Subject = "Awesome Subject"
 e.Text = []byte("Text Body is, of course, supported!\n")
 e.HTML = []byte("<h1>Fancy Html is supported, too!</h1>\n")
