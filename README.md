@@ -1,7 +1,8 @@
 email
 =====  
 Written in go.  
-This is inspired by [jordan-wright](https://github.com/jordan-wright/email).  
+This is inspired by (forked from) [jordan-wright](https://github.com/jordan-wright/email).  
+
 
 ## Install
 ```c
