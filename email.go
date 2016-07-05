@@ -226,6 +226,23 @@ func (e *Email) Send(addr string, a smtp.Auth) error {
 	return smtp.SendMail(addr, a, from.Address, to, raw)
 }
 
+// SendForce sends an email without parsing mail address.
+// This could work for the email address violating RFC format.
+func (e *Email) SendForce(addr string, a smtp.Auth) error {
+	// Merge the To, Cc, and Bcc fields
+	to := make([]string, 0, len(e.ToAddresses)+len(e.CcAddresses)+len(e.BccAddresses))
+	to = append(append(append(to, e.ToAddresses...), e.CcAddresses...), e.BccAddresses...)
+	// Check to make sure there is at least one recipient and one "From" address
+	if e.FromAddress == "" || len(to) == 0 {
+		return errors.New("Must specify at least one From address and one To address")
+	}
+	raw, err := e.Bytes()
+	if err != nil {
+		return err
+	}
+	return smtp.SendMail(addr, a, e.FromAddress, to, raw)
+}
+
 // Attachment is a struct representing an email attachment.
 // Based on the mime/multipart.FileHeader struct, Attachment contains the name, MIMEHeader, and content of the attachment in question
 type Attachment struct {
