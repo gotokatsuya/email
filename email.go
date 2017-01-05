@@ -39,6 +39,28 @@ type Email struct {
 	ReadReceipt  []string
 }
 
+func (e *Email) GetFromName() string              { return e.FromName }
+func (e *Email) GetFromAddress() string           { return e.FromAddress }
+func (e *Email) GetToAddresses() []string         { return e.ToAddresses }
+func (e *Email) GetBccAddresses() []string        { return e.BccAddresses }
+func (e *Email) GetCcAddresses() []string         { return e.CcAddresses }
+func (e *Email) GetSubject() string               { return e.Subject }
+func (e *Email) GetText() []byte                  { return e.Text }
+func (e *Email) GetHTML() []byte                  { return e.HTML }
+func (e *Email) GetHeaders() textproto.MIMEHeader { return e.Headers }
+func (e *Email) GetReadReceipt() []string         { return e.ReadReceipt }
+
+func (e *Email) SetFromName(fromName string)             { e.FromName = fromName }
+func (e *Email) SetFromAddress(fromAddress string)       { e.FromAddress = fromAddress }
+func (e *Email) SetToAddresses(toAddresses []string)     { e.ToAddresses = toAddresses }
+func (e *Email) SetBccAddresses(bccAddresses []string)   { e.BccAddresses = bccAddresses }
+func (e *Email) SetCcAddresses(ccAddresses []string)     { e.CcAddresses = ccAddresses }
+func (e *Email) SetSubject(subject string)               { e.Subject = subject }
+func (e *Email) SetText(text []byte)                     { e.Text = text }
+func (e *Email) SetHTML(html []byte)                     { e.HTML = html }
+func (e *Email) SetHeaders(headers textproto.MIMEHeader) { e.Headers = headers }
+func (e *Email) SetReadReceipt(readReceipt []string)     { e.ReadReceipt = readReceipt }
+
 // NewEmail creates an Email, and returns the pointer to it.
 func NewEmail() *Email {
 	return &Email{Headers: textproto.MIMEHeader{}}
